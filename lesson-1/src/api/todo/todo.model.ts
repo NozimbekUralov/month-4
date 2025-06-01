@@ -2,16 +2,25 @@ import { ObjectId } from "mongodb";
 
 export class TodoModel {
     constructor(
-        public userId: ObjectId,
         public title: string,
         public description: string,
-        public is_completed: boolean = false,
-    ){}
+    ) { }
 }
+
+export interface CreateTodo extends TodoModel {
+    is_completed: boolean
+    user_id: string
+}
+export interface UpdateTodo extends Partial<{
+    title: string
+    user_id: string
+    description: string
+    is_completed: boolean
+}> { }
 
 export interface Todo {
     _id: ObjectId
-    userId: ObjectId
+    user_id: string
     title: string
     description: string
     is_completed: boolean
