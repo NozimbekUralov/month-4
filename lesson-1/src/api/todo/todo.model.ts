@@ -1,20 +1,18 @@
-import { description, title } from "@/lib/zod";
 import { ObjectId } from "mongodb";
-import { z } from "zod";
 
-const TodoSchema = z.object({
-    title,
-    description,
-    userId: z.string().nonempty()
-})
-
-export interface TodoI extends Document {
-    _id: ObjectId
-    title: string
-    description: string
-    userId: ObjectId
-    is_completed: boolean
+export class TodoModel {
+    constructor(
+        public userId: ObjectId,
+        public title: string,
+        public description: string,
+        public is_completed: boolean = false,
+    ){}
 }
 
-export type CreateTodo = z.infer<typeof TodoSchema>
-export type UpdateTodo = Partial<CreateTodo>
+export interface Todo {
+    _id: ObjectId
+    userId: ObjectId
+    title: string
+    description: string
+    is_completed: boolean
+}

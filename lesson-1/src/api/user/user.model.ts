@@ -1,21 +1,18 @@
-import { email, name, password } from "@/lib/zod";
-import { z } from "zod";
-import { TodoI } from "../todo/todo.model";
-import { ObjectId } from "mongodb";
+import { ObjectId } from "mongodb"
+import { Todo } from "../todo/todo.model"
 
-export const UserSchema = z.object({
-    email,
-    password,
-    name,
-})
-
-export interface UserI extends Document {
-    todos: TodoI[];
-    _id: ObjectId;
-    name: string;
-    email: string;
-    password: string;
+export class UserModel {
+    constructor(
+        public name: string,
+        public email: string,
+        public password: string
+    ){}
 }
 
-export type CreateUser = z.infer<typeof UserSchema>
-export type UpdateUser = Partial<CreateUser>
+export interface User {
+    _id: ObjectId
+    name: string,
+    email: string,
+    password: string
+    todos: Todo[]
+}

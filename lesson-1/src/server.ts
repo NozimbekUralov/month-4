@@ -1,14 +1,17 @@
 import express from "express";
+import swaggerUI, { serve } from "swagger-ui-express";
 
 import { serverConfig } from "./common/config";
 import { Database } from "./lib/mongodb";
 import { appRouter } from "./api/app";
+import swagger from './swagger.json'
 const { PORT, DB_URL, DB_NAME } = serverConfig
 
 const server = express();
 
 server.use(express.json());
 
+server.use('/api-docs', serve, swaggerUI.setup(swagger));
 server.use('/api', appRouter(express.Router()))
 
 server.listen(PORT, async () => {
