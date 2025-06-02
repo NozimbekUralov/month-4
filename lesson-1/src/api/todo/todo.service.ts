@@ -27,4 +27,9 @@ export class TodoService {
         const todos = await this.collection.find({ user_id }).toArray()
         return todos as Todo[]
     }
+
+    async deleteOne(_id: string): Promise<boolean> {
+        const { acknowledged } = await this.collection.deleteOne({ _id: new ObjectId(_id) })
+        return acknowledged
+    }
 }

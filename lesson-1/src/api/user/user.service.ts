@@ -7,10 +7,16 @@ import { Database } from "@/lib/mongodb"
 export class UserService {
     protected readonly collection: Collection = Database.conn.collection('users')
 
-    async create(data: UserModel) {
+    async create(data: UserModel): Promise<User | null> {
         const { insertedId, acknowledged } = await this.collection.insertOne(data)
         if (acknowledged) return this.getOneById(insertedId.toString())
         return null
+    }
+
+    async update(_id: string, data: Partial<UserModel>): Promise<User | null> {
+        const { acknowledged } = await this.collection.updateOne({ _id: new ObjectId(_id) }, { $set: data })
+        if (!acknowledged) return null
+        return { ...data, _id: new ObjectId(_id) } as User
     }
 
     async getOneById(_id: string): Promise<User | null> {

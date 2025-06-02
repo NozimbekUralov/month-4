@@ -1,4 +1,4 @@
-import { Body, Controller, Path, Post, Put, Request, Route, Security, SuccessResponse, Tags } from "tsoa";
+import { Body, Controller, Delete, Path, Post, Put, Request, Route, Security, SuccessResponse, Tags } from "tsoa";
 import { inject, injectable } from "tsyringe";
 import { TodoService } from "./todo.service";
 import { TodoModel } from "./todo.model";
@@ -43,4 +43,22 @@ export class TodoController extends Controller {
         }
         return newTodo;
     }
+
+    @Delete('/{id}')
+    @Security("BearerAuth")
+    async delete(@Request() req: any, @Path() id: string) {
+        const { _id } = req.user;
+        const todo = await this.service.getOneTodo(id);
+        if (!todo || todo.user_id != _id) {
+            this.setStatus(404);
+            return;
+        }
+        const deleted = await this.service.deleteOne(id);
+        if (!deleted) {
+            this.setStatus(500);
+            return;
+        }
+        return { message: "Todo deleted" };
+    }
+
 }
