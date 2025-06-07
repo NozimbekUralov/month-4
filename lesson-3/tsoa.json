@@ -1,0 +1,30 @@
+{
+    "entryFile": "index.ts",
+    "noImplicitAdditionalProperties": "throw-on-extras",
+    "controllerPathGlobs": [
+        "src/controllers/*.ts"
+    ],
+    "spec": {
+        "outputDirectory": "./",
+        "specVersion": 3,
+        "basePath": "/api",
+        "securityDefinitions": {
+            "BearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    },
+    "routes": {
+        "routesDir": "src/routes"
+    },
+    "compilerOptions": {
+        "baseUrl": "./",
+        "paths": {
+            "@/*": [
+                "src/*"
+            ]
+        }
+    }
+}
