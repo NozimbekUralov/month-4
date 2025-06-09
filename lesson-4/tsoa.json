@@ -1,0 +1,32 @@
+{
+    "entryFile": "src/server.ts",
+    "noImplicitAdditionalProperties": "throw-on-extras",
+    "controllerPathGlobs": [
+        "src/api/**/*.controller.ts"
+    ],
+    "spec": {
+        "outputDirectory": "src",
+        "specVersion": 3,
+        "basePath": "/api",
+        "securityDefinitions": {
+            "BearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    },
+    "routes": {
+        "routesDir": "src/routes",
+        "iocModule": "src/lib/ioc",
+        "authenticationModule": "src/api/auth/auth.middleware"
+    },
+    "compilerOptions": {
+        "baseUrl": "./",
+        "paths": {
+            "@/*": [
+                "src/*"
+            ]
+        }
+    }
+}
