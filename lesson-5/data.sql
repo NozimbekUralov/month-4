@@ -1,0 +1,31 @@
+CREATE TABLE IF NOT EXISTS roles (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(32) NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(64) NOT NULL,
+    email VARCHAR(64) NOT NULL UNIQUE,
+    password VARCHAR(64) NOT NULL,
+    roleId INT NOT NULL,
+    FOREIGN KEY (roleId) REFERENCES roles (id)
+);
+
+CREATE TABLE IF NOT EXISTS categories (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(32) NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS products (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    price DOUBLE(10, 2) NOT NULL,
+    discount INT NOT NULL DEFAULT 0,
+    count INT NOT NULL DEFAULT 1,
+    image TEXT NOT NULL,
+    description TEXT NOT NULL,
+    sellerId INT NOT NULL,
+    categoryId INT NOT NULL,
+    FOREIGN KEY (sellerId) REFERENCES users (id),
+    FOREIGN KEY (categoryId) REFERENCES categories (id)
+);
